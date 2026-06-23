@@ -25,7 +25,7 @@
   .wrap { width:min(1100px, calc(100% - 20px)); margin:22px auto 36px; }
   h1 { margin:0 0 6px; font-size:clamp(28px,4vw,44px); letter-spacing:-1px; text-shadow:0 0 22px rgba(120,160,255,.85); }
   .sub { opacity:.82; margin-bottom:14px; font-size:14px; }
-  .panel { background:rgba(8,14,32,.72); border:1px solid rgba(160,185,255,.28); border-radius:18px; box-shadow:0 18px 60px rgba(0,0,0,.28); backdrop-filter:blur(8px); padding:16px; }
+  .panel { background:rgba(8,14,32,.72); border:1px solid rgba(160,185,255,.28); border-radius:18px; box-shadow:0 18px 60px rgba(0,0,0,.28); backdrop-filter:blur(8px); padding:14px; }
   .top { display:grid; grid-template-columns:1fr auto auto; gap:10px; margin-bottom:14px; }
   input { width:100%; border:1px solid rgba(170,190,255,.4); background:rgba(0,0,0,.25); color:#fff; border-radius:12px; padding:13px 14px; font-size:16px; outline:none; }
   input:focus { border-color:#8fb3ff; box-shadow:0 0 0 3px rgba(100,140,255,.2); }
@@ -34,25 +34,25 @@
   button:disabled { opacity:.48; cursor:not-allowed; transform:none; }
   .apply { background:linear-gradient(135deg,#ffc443,#ff6bcb); color:#1d1024; }
   .reload { background:linear-gradient(135deg,#6d5cff,#22b7ff); }
-  .cancel-btn { padding:2px 6px; border-radius:999px; background:rgba(255,100,120,.18); color:#ff9ca8; border:1px solid rgba(255,130,150,.35); font-size:11px; line-height:1; }
+  .cancel-btn { padding:0 4px; border-radius:999px; background:rgba(255,100,120,.18); color:#ff9ca8; border:1px solid rgba(255,130,150,.35); font-size:10px; line-height:1.1; margin-left:1px; }
 
   .table-box { overflow-x:auto; border-radius:14px; border:1px solid rgba(160,185,255,.26); }
   table { width:100%; min-width:680px; border-collapse:collapse; background:rgba(3,7,20,.62); }
-  th,td { border:1px solid rgba(170,190,255,.24); padding:8px; vertical-align:middle; }
+  th,td { border:1px solid rgba(170,190,255,.24); padding:5px 6px; vertical-align:middle; }
   th { background:rgba(255,255,255,.09); font-size:14px; }
-  .day-cell { width:78px; text-align:center; font-weight:900; font-size:16px; background:rgba(255,255,255,.055); }
-  .time-cell { width:68px; text-align:center; font-weight:900; }
-  .role-cell { width:168px; text-align:center; padding:6px; }
-  .role-options { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; }
-  .role-option { display:inline-flex; align-items:center; gap:3px; padding:4px 6px; border-radius:10px; background:rgba(255,255,255,.055); font-weight:900; font-size:13px; }
-  .role-check { width:17px; height:17px; accent-color:#77b7ff; cursor:pointer; }
-  .participants { min-width:360px; }
-  .participant-list { display:flex; flex-wrap:wrap; gap:4px; align-items:flex-start; max-height:108px; overflow-y:auto; padding:2px; }
-  .entry { display:inline-flex; align-items:center; gap:3px; padding:3px 6px; border-radius:999px; background:rgba(255,255,255,.055); font-weight:800; font-size:11px; line-height:1.2; word-break:break-all; }
+  .day-cell { width:70px; text-align:center; font-weight:900; font-size:15px; background:rgba(255,255,255,.055); }
+  .time-cell { width:56px; text-align:center; font-weight:900; font-size:14px; }
+  .role-cell { width:132px; text-align:center; padding:4px; }
+  .role-options { display:flex; justify-content:center; align-items:center; gap:5px; flex-wrap:nowrap; }
+  .role-option { display:inline-flex; align-items:center; gap:2px; padding:3px 4px; border-radius:8px; background:rgba(255,255,255,.055); font-weight:900; font-size:12px; }
+  .role-check { width:15px; height:15px; accent-color:#77b7ff; cursor:pointer; }
+  .participants { min-width:330px; }
+  .participant-list { display:flex; flex-wrap:wrap; gap:3px; align-items:flex-start; max-height:62px; overflow-y:auto; padding:1px; scrollbar-width:thin; }
+  .entry { display:inline-flex; align-items:center; gap:2px; padding:2px 5px; border-radius:999px; background:rgba(255,255,255,.045); font-weight:800; font-size:10px; line-height:1.1; word-break:break-all; }
   .entry.dealer { color:#63baff; border:1px solid rgba(80,170,255,.20); }
   .entry.support { color:#66f197; border:1px solid rgba(100,255,150,.18); }
   .entry.both { color:#ffd86b; border:1px solid rgba(255,220,100,.20); }
-  .empty { opacity:.42; font-size:12px; padding:4px 2px; }
+  .empty { opacity:.35; font-size:11px; padding:2px; }
   .status { min-height:22px; margin-top:12px; color:#ffd978; font-weight:800; }
   .note { margin-top:8px; opacity:.72; font-size:12px; }
 
@@ -62,7 +62,7 @@
     .top { grid-template-columns:1fr; }
     button { width:100%; }
     table { min-width:560px; }
-    th,td { padding:6px; }
+    th,td { padding:4px; }
     .day-cell { width:56px; font-size:14px; }
     .time-cell { width:48px; font-size:14px; }
     .role-cell { width:128px; }
@@ -70,8 +70,8 @@
     .role-option { font-size:12px; padding:3px 4px; }
     .role-check { width:16px; height:16px; }
     .participants { min-width:260px; }
-    .participant-list { max-height:94px; }
-    .entry { font-size:10px; padding:3px 5px; }
+    .participant-list { max-height:58px; }
+    .entry { font-size:9.5px; padding:2px 4px; }
   }
 </style>
 </head>
@@ -92,7 +92,7 @@
       </table>
     </div>
     <div id="status" class="status"></div>
-    <div class="note">※ 같은 요일/시간에 같은 이름이 이미 있으면 등록되지 않음 / 방금 등록한 항목은 현재 브라우저에서 취소 가능</div>
+    <div class="note">※ 같은 요일/시간에 같은 이름이 이미 있으면 등록되지 않음 / 이름 입력칸과 같은 참여자만 취소 버튼이 보입니다.</div>
   </section>
 </div>
 <script>
@@ -101,9 +101,8 @@
   const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일", "일":"일요일" };
   const TIMES = ["9시", "10시"];
   const ROLES = ["dealer", "support", "both"];
-  const ROLE_ICON = { dealer:"⚔️", support:"✨", both:"⚔️✨" };
+  const ROLE_ICON = { dealer:"⚔️", support:"💖", both:"⚔️💖" };
   let entries = [];
-  let recentKeys = JSON.parse(localStorage.getItem("raidRecentKeys") || "[]");
 
   const tbody = document.getElementById("raidBody");
   const statusEl = document.getElementById("status");
@@ -142,13 +141,14 @@
         </div>`;
         tr.appendChild(roleTd);
 
+        const currentName = nameInput.value.trim();
         const peopleTd = document.createElement("td");
         peopleTd.className = "participants";
         peopleTd.innerHTML = `<div class="participant-list">
           ${list.length ? list.map(e => `<span class="entry ${escapeHtml(e.role)}">
             <span>${ROLE_ICON[e.role] || "•"}</span><span>${escapeHtml(e.name)}</span>
-            ${e.key && recentKeys.includes(e.key) ? `<button class="cancel-btn" onclick="cancelEntry('${escapeAttr(e.key)}')">취소</button>` : ""}
-          </span>`).join("") : `<span class="empty">아직 참여자 없음</span>`}
+            ${currentName && e.name === currentName ? `<button class="cancel-btn" data-day="${escapeAttr(e.day)}" data-time="${escapeAttr(e.time)}" data-name="${escapeAttr(e.name)}" onclick="cancelEntryFromButton(this)" title="취소">×</button>` : ""}
+          </span>`).join("") : `<span class="empty">-</span>`}
         </div>`;
         tr.appendChild(peopleTd);
         tbody.appendChild(tr);
@@ -183,21 +183,23 @@
     setButtonsDisabled(true); setStatus(`${payload.length}개 항목 저장 중...`);
     jsonp({ action:"batchJoin", payload: JSON.stringify(payload) }, (data) => {
       if (!data.ok) { setStatus(data.error || "저장 실패"); setButtonsDisabled(false); return; }
-      recentKeys = [...new Set([...recentKeys, ...payload.map(p => p.key)])].slice(-100);
-      localStorage.setItem("raidRecentKeys", JSON.stringify(recentKeys));
       document.querySelectorAll(".role-check:checked").forEach(chk => chk.checked = false);
       setStatus(`저장 완료! ${data.count || payload.length}개 적용됨.`);
       loadEntries(false);
     }, () => { setStatus("저장 실패: Apps Script URL 또는 배포 권한을 확인해줘."); setButtonsDisabled(false); });
   }
 
-  function cancelEntry(key) {
-    if (!key || !recentKeys.includes(key)) return;
+  function cancelEntryFromButton(btn) {
+    const day = btn.dataset.day;
+    const time = btn.dataset.time;
+    const name = btn.dataset.name;
+    if (!name || name !== nameInput.value.trim()) {
+      setStatus("입력한 이름과 같은 참여자만 취소할 수 있어.");
+      return;
+    }
     setButtonsDisabled(true); setStatus("취소 중...");
-    jsonp({ action:"cancel", keys: JSON.stringify([key]) }, (data) => {
+    jsonp({ action:"cancel", name, day, time }, (data) => {
       if (!data.ok) { setStatus("취소 실패: " + (data.error || "알 수 없는 오류")); setButtonsDisabled(false); return; }
-      recentKeys = recentKeys.filter(k => k !== key);
-      localStorage.setItem("raidRecentKeys", JSON.stringify(recentKeys));
       setStatus("취소 완료.");
       loadEntries(false);
     }, () => { setStatus("취소 실패: Apps Script URL 또는 배포 권한을 확인해줘."); setButtonsDisabled(false); });
@@ -227,6 +229,7 @@
   function setButtonsDisabled(disabled) { document.querySelectorAll("button").forEach(btn => btn.disabled = disabled); }
   function escapeHtml(value) { return String(value || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
   function escapeAttr(value) { return escapeHtml(value).replaceAll("`", "&#096;"); }
+  nameInput.addEventListener("input", render);
   render(); loadEntries();
 </script>
 </body>
