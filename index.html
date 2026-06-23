@@ -7,8 +7,7 @@
 <style>
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    min-height: 100vh;
+    margin: 0; min-height: 100vh;
     font-family: 'Pretendard','Noto Sans KR',system-ui,sans-serif;
     color: #fff;
     background:
@@ -19,43 +18,37 @@
     overflow-x: hidden;
   }
   body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      radial-gradient(#fff 1px, transparent 1px),
-      radial-gradient(rgba(255,255,255,.65) 1px, transparent 1px);
-    background-size: 42px 42px, 88px 88px;
-    background-position: 0 0, 23px 18px;
-    opacity: .25;
-    z-index: -1;
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+    background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(rgba(255,255,255,.65) 1px, transparent 1px);
+    background-size:42px 42px, 88px 88px; background-position:0 0, 23px 18px; opacity:.25;
   }
-  .wrap { width: min(1100px, calc(100% - 20px)); margin: 22px auto 36px; }
-  h1 { margin: 0 0 6px; font-size: clamp(28px, 4vw, 44px); letter-spacing: -1px; text-shadow: 0 0 22px rgba(120,160,255,.85); }
+  .wrap { width:min(1100px, calc(100% - 20px)); margin:22px auto 36px; }
+  h1 { margin:0 0 6px; font-size:clamp(28px,4vw,44px); letter-spacing:-1px; text-shadow:0 0 22px rgba(120,160,255,.85); }
   .sub { opacity:.82; margin-bottom:14px; font-size:14px; }
-  .panel { background: rgba(8, 14, 32, .72); border:1px solid rgba(160,185,255,.28); border-radius: 18px; box-shadow: 0 18px 60px rgba(0,0,0,.28); backdrop-filter: blur(8px); padding: 16px; }
-  .top { display:grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom:14px; }
+  .panel { background:rgba(8,14,32,.72); border:1px solid rgba(160,185,255,.28); border-radius:18px; box-shadow:0 18px 60px rgba(0,0,0,.28); backdrop-filter:blur(8px); padding:16px; }
+  .top { display:grid; grid-template-columns:1fr auto auto; gap:10px; margin-bottom:14px; }
   input { width:100%; border:1px solid rgba(170,190,255,.4); background:rgba(0,0,0,.25); color:#fff; border-radius:12px; padding:13px 14px; font-size:16px; outline:none; }
   input:focus { border-color:#8fb3ff; box-shadow:0 0 0 3px rgba(100,140,255,.2); }
-  button { border:0; border-radius:12px; padding:11px 14px; color:#fff; font-weight:900; cursor:pointer; transition:.15s transform, .15s filter; white-space:nowrap; }
-  button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  button { border:0; border-radius:12px; padding:11px 14px; color:#fff; font-weight:900; cursor:pointer; transition:.15s transform,.15s filter; white-space:nowrap; }
+  button:hover { transform:translateY(-1px); filter:brightness(1.08); }
   button:disabled { opacity:.48; cursor:not-allowed; transform:none; }
   .apply { background:linear-gradient(135deg,#ffc443,#ff6bcb); color:#1d1024; }
   .reload { background:linear-gradient(135deg,#6d5cff,#22b7ff); }
+  .cancel-btn { padding:2px 6px; border-radius:999px; background:rgba(255,100,120,.18); color:#ff9ca8; border:1px solid rgba(255,130,150,.35); font-size:11px; line-height:1; }
 
   .table-box { overflow-x:auto; border-radius:14px; border:1px solid rgba(160,185,255,.26); }
-  table { width:100%; min-width:760px; border-collapse:collapse; background:rgba(3,7,20,.62); }
-  th, td { border:1px solid rgba(170,190,255,.24); padding:8px; vertical-align:middle; }
+  table { width:100%; min-width:680px; border-collapse:collapse; background:rgba(3,7,20,.62); }
+  th,td { border:1px solid rgba(170,190,255,.24); padding:8px; vertical-align:middle; }
   th { background:rgba(255,255,255,.09); font-size:14px; }
   .day-cell { width:78px; text-align:center; font-weight:900; font-size:16px; background:rgba(255,255,255,.055); }
   .time-cell { width:68px; text-align:center; font-weight:900; }
-  .check-cell { width:42px; text-align:center; padding:4px; }
-  .check-head { font-size:18px; line-height:1; }
-  .role-check { width:20px; height:20px; accent-color:#77b7ff; cursor:pointer; }
+  .role-cell { width:168px; text-align:center; padding:6px; }
+  .role-options { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; }
+  .role-option { display:inline-flex; align-items:center; gap:3px; padding:4px 6px; border-radius:10px; background:rgba(255,255,255,.055); font-weight:900; font-size:13px; }
+  .role-check { width:17px; height:17px; accent-color:#77b7ff; cursor:pointer; }
   .participants { min-width:360px; }
-  .participant-list { display:flex; flex-wrap:wrap; gap:5px; align-items:flex-start; max-height:118px; overflow-y:auto; padding:2px; }
-  .entry { display:inline-flex; align-items:center; gap:3px; padding:4px 7px; border-radius:999px; background:rgba(255,255,255,.055); font-weight:800; font-size:12px; line-height:1.2; word-break:break-all; }
+  .participant-list { display:flex; flex-wrap:wrap; gap:4px; align-items:flex-start; max-height:108px; overflow-y:auto; padding:2px; }
+  .entry { display:inline-flex; align-items:center; gap:3px; padding:3px 6px; border-radius:999px; background:rgba(255,255,255,.055); font-weight:800; font-size:11px; line-height:1.2; word-break:break-all; }
   .entry.dealer { color:#63baff; border:1px solid rgba(80,170,255,.20); }
   .entry.support { color:#66f197; border:1px solid rgba(100,255,150,.18); }
   .entry.both { color:#ffd86b; border:1px solid rgba(255,220,100,.20); }
@@ -63,19 +56,22 @@
   .status { min-height:22px; margin-top:12px; color:#ffd978; font-weight:800; }
   .note { margin-top:8px; opacity:.72; font-size:12px; }
 
-  @media (max-width: 650px) {
-    .wrap { width: calc(100% - 12px); margin-top:14px; }
+  @media (max-width:650px) {
+    .wrap { width:calc(100% - 12px); margin-top:14px; }
     .panel { padding:10px; border-radius:14px; }
-    .top { grid-template-columns: 1fr; }
+    .top { grid-template-columns:1fr; }
     button { width:100%; }
-    table { min-width:620px; }
-    th, td { padding:6px; }
-    .day-cell { width:58px; font-size:14px; }
-    .time-cell { width:50px; font-size:14px; }
-    .check-cell { width:34px; }
-    .participants { min-width:300px; }
-    .participant-list { max-height:96px; }
-    .entry { font-size:11px; padding:3px 6px; }
+    table { min-width:560px; }
+    th,td { padding:6px; }
+    .day-cell { width:56px; font-size:14px; }
+    .time-cell { width:48px; font-size:14px; }
+    .role-cell { width:128px; }
+    .role-options { gap:4px; }
+    .role-option { font-size:12px; padding:3px 4px; }
+    .role-check { width:16px; height:16px; }
+    .participants { min-width:260px; }
+    .participant-list { max-height:94px; }
+    .entry { font-size:10px; padding:3px 5px; }
   }
 </style>
 </head>
@@ -83,165 +79,137 @@
 <div class="wrap">
   <h1>⚔️ 레이드 참여표</h1>
   <div class="sub">수요일 시작 · 수~일 · 9시 / 10시 · 체크 후 한 번에 적용</div>
-
   <section class="panel">
     <div class="top">
       <input id="nameInput" maxlength="12" placeholder="이름 입력 (2~12글자)" />
       <button class="apply" onclick="applySelections()">선택 적용</button>
       <button class="reload" onclick="loadEntries()">새로고침</button>
     </div>
-
     <div class="table-box">
       <table>
-        <thead>
-          <tr>
-            <th>요일</th>
-            <th>시간</th>
-            <th class="check-head">⚔️</th>
-            <th class="check-head">✨</th>
-            <th class="check-head">⚔️✨</th>
-            <th>참여자</th>
-          </tr>
-        </thead>
+        <thead><tr><th>요일</th><th>시간</th><th>참여</th><th>참여자</th></tr></thead>
         <tbody id="raidBody"></tbody>
       </table>
     </div>
-
     <div id="status" class="status"></div>
-    <div class="note">※ 중복 참여 가능 / 각 시간마다 딜러·서폿·둘다가능을 따로 체크할 수 있음 / 적용 후 목록을 다시 불러옵니다.</div>
+    <div class="note">※ 같은 요일/시간에 같은 이름이 이미 있으면 등록되지 않음 / 방금 등록한 항목은 현재 브라우저에서 취소 가능</div>
   </section>
 </div>
-
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxd33tywNBwO-DLYmF6qVCwmYTjAOVJTVrFwd3Y3jSP9vvdSs_eCh9bCaiPstsien3O/exec";
-
   const DAYS = ["수", "목", "금", "토", "일"];
   const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일", "일":"일요일" };
   const TIMES = ["9시", "10시"];
   const ROLES = ["dealer", "support", "both"];
   const ROLE_ICON = { dealer:"⚔️", support:"✨", both:"⚔️✨" };
   let entries = [];
+  let recentKeys = JSON.parse(localStorage.getItem("raidRecentKeys") || "[]");
 
   const tbody = document.getElementById("raidBody");
   const statusEl = document.getElementById("status");
   const nameInput = document.getElementById("nameInput");
-
   function setStatus(msg) { statusEl.textContent = msg || ""; }
 
   function validateName() {
     const name = nameInput.value.trim();
-    if (name.length < 2 || name.length > 12) {
-      setStatus("이름은 2~12글자로 입력해줘.");
-      nameInput.focus();
-      return null;
-    }
+    if (name.length < 2 || name.length > 12) { setStatus("이름은 2~12글자로 입력해줘."); nameInput.focus(); return null; }
     return name;
   }
-
-  function checkboxId(day, time, role) {
-    return `chk_${day}_${time}_${role}`.replaceAll("시", "");
-  }
+  function makeKey() { return "k_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2); }
+  function checkboxId(day,time,role) { return `chk_${day}_${time}_${role}`.replaceAll("시", ""); }
+  function slotKey(day,time) { return `${day}_${time}`; }
 
   function render() {
     tbody.innerHTML = "";
-
     DAYS.forEach(day => {
       TIMES.forEach((time, timeIndex) => {
         const list = entries.filter(e => e.day === day && e.time === time);
         const tr = document.createElement("tr");
-
         if (timeIndex === 0) {
           const dayTd = document.createElement("td");
-          dayTd.className = "day-cell";
-          dayTd.rowSpan = TIMES.length;
-          dayTd.textContent = DAY_LABELS[day];
+          dayTd.className = "day-cell"; dayTd.rowSpan = TIMES.length; dayTd.textContent = DAY_LABELS[day];
           tr.appendChild(dayTd);
         }
-
         const timeTd = document.createElement("td");
-        timeTd.className = "time-cell";
-        timeTd.textContent = time;
-        tr.appendChild(timeTd);
+        timeTd.className = "time-cell"; timeTd.textContent = time; tr.appendChild(timeTd);
 
-        ROLES.forEach(role => {
-          const td = document.createElement("td");
-          td.className = "check-cell";
-          td.innerHTML = `<input class="role-check" type="checkbox" id="${checkboxId(day,time,role)}" data-day="${day}" data-time="${time}" data-role="${role}">`;
-          tr.appendChild(td);
-        });
+        const roleTd = document.createElement("td");
+        roleTd.className = "role-cell";
+        roleTd.innerHTML = `<div class="role-options">
+          ${ROLES.map(role => `<label class="role-option" title="${role}">
+            <span>${ROLE_ICON[role]}</span><input class="role-check" type="checkbox" id="${checkboxId(day,time,role)}" data-day="${day}" data-time="${time}" data-role="${role}" onchange="singleRoleOnly(this)">
+          </label>`).join("")}
+        </div>`;
+        tr.appendChild(roleTd);
 
         const peopleTd = document.createElement("td");
         peopleTd.className = "participants";
-        peopleTd.innerHTML = `
-          <div class="participant-list">
-            ${list.length ? list.map(e => `
-              <span class="entry ${escapeHtml(e.role)}">
-                <span>${ROLE_ICON[e.role] || "•"}</span>
-                <span>${escapeHtml(e.name)}</span>
-              </span>
-            `).join("") : `<span class="empty">아직 참여자 없음</span>`}
-          </div>
-        `;
+        peopleTd.innerHTML = `<div class="participant-list">
+          ${list.length ? list.map(e => `<span class="entry ${escapeHtml(e.role)}">
+            <span>${ROLE_ICON[e.role] || "•"}</span><span>${escapeHtml(e.name)}</span>
+            ${e.key && recentKeys.includes(e.key) ? `<button class="cancel-btn" onclick="cancelEntry('${escapeAttr(e.key)}')">취소</button>` : ""}
+          </span>`).join("") : `<span class="empty">아직 참여자 없음</span>`}
+        </div>`;
         tr.appendChild(peopleTd);
-
         tbody.appendChild(tr);
       });
     });
   }
 
-  function applySelections() {
-    const name = validateName();
-    if (!name) return;
-
-    const checked = Array.from(document.querySelectorAll(".role-check:checked"));
-    if (checked.length === 0) {
-      setStatus("체크한 항목이 없어.");
-      return;
-    }
-
-    const payload = checked.map(chk => ({
-      name,
-      day: chk.dataset.day,
-      time: chk.dataset.time,
-      role: chk.dataset.role
-    }));
-
-    setButtonsDisabled(true);
-    setStatus(`${payload.length}개 항목 저장 중...`);
-
-    jsonp({ action: "batchJoin", payload: JSON.stringify(payload) }, (data) => {
-      if (!data.ok) {
-        setStatus("저장 실패: " + (data.error || "알 수 없는 오류"));
-        setButtonsDisabled(false);
-        return;
-      }
-      document.querySelectorAll(".role-check:checked").forEach(chk => chk.checked = false);
-      setStatus(`저장 완료! ${data.count || payload.length}개 적용됨. 목록 다시 불러오는 중...`);
-      loadEntries();
-    }, () => {
-      setStatus("저장 실패: Apps Script URL 또는 배포 권한을 확인해줘.");
-      setButtonsDisabled(false);
+  function singleRoleOnly(changed) {
+    if (!changed.checked) return;
+    document.querySelectorAll(`.role-check[data-day="${changed.dataset.day}"][data-time="${changed.dataset.time}"]`).forEach(chk => {
+      if (chk !== changed) chk.checked = false;
     });
   }
 
-  function loadEntries() {
-    setButtonsDisabled(true);
-    setStatus("목록 불러오는 중...");
+  function applySelections() {
+    const name = validateName(); if (!name) return;
+    const checked = Array.from(document.querySelectorAll(".role-check:checked"));
+    if (checked.length === 0) { setStatus("체크한 항목이 없어."); return; }
 
-    jsonp({ action: "list" }, (data) => {
-      if (!data.ok) {
-        setStatus("불러오기 실패: " + (data.error || "알 수 없는 오류"));
-        setButtonsDisabled(false);
-        return;
-      }
+    const duplicateLocal = checked.find(chk => entries.some(e => e.day === chk.dataset.day && e.time === chk.dataset.time && e.name === name));
+    if (duplicateLocal) { setStatus(`${DAY_LABELS[duplicateLocal.dataset.day]} ${duplicateLocal.dataset.time}에 이미 등록되었습니다.`); return; }
+
+    const seen = new Set();
+    const payload = [];
+    for (const chk of checked) {
+      const sk = slotKey(chk.dataset.day, chk.dataset.time);
+      if (seen.has(sk)) { setStatus("같은 시간에는 하나의 역할만 선택해줘."); return; }
+      seen.add(sk);
+      payload.push({ key: makeKey(), name, day: chk.dataset.day, time: chk.dataset.time, role: chk.dataset.role });
+    }
+
+    setButtonsDisabled(true); setStatus(`${payload.length}개 항목 저장 중...`);
+    jsonp({ action:"batchJoin", payload: JSON.stringify(payload) }, (data) => {
+      if (!data.ok) { setStatus(data.error || "저장 실패"); setButtonsDisabled(false); return; }
+      recentKeys = [...new Set([...recentKeys, ...payload.map(p => p.key)])].slice(-100);
+      localStorage.setItem("raidRecentKeys", JSON.stringify(recentKeys));
+      document.querySelectorAll(".role-check:checked").forEach(chk => chk.checked = false);
+      setStatus(`저장 완료! ${data.count || payload.length}개 적용됨.`);
+      loadEntries(false);
+    }, () => { setStatus("저장 실패: Apps Script URL 또는 배포 권한을 확인해줘."); setButtonsDisabled(false); });
+  }
+
+  function cancelEntry(key) {
+    if (!key || !recentKeys.includes(key)) return;
+    setButtonsDisabled(true); setStatus("취소 중...");
+    jsonp({ action:"cancel", keys: JSON.stringify([key]) }, (data) => {
+      if (!data.ok) { setStatus("취소 실패: " + (data.error || "알 수 없는 오류")); setButtonsDisabled(false); return; }
+      recentKeys = recentKeys.filter(k => k !== key);
+      localStorage.setItem("raidRecentKeys", JSON.stringify(recentKeys));
+      setStatus("취소 완료.");
+      loadEntries(false);
+    }, () => { setStatus("취소 실패: Apps Script URL 또는 배포 권한을 확인해줘."); setButtonsDisabled(false); });
+  }
+
+  function loadEntries(showLoading = true) {
+    setButtonsDisabled(true); if (showLoading) setStatus("목록 불러오는 중...");
+    jsonp({ action:"list" }, (data) => {
+      if (!data.ok) { setStatus("불러오기 실패: " + (data.error || "알 수 없는 오류")); setButtonsDisabled(false); return; }
       entries = Array.isArray(data.rows) ? data.rows.filter(e => DAYS.includes(e.day) && TIMES.includes(e.time)) : [];
-      render();
-      setStatus("목록 불러오기 완료.");
-      setButtonsDisabled(false);
-    }, () => {
-      setStatus("불러오기 실패: Apps Script URL 또는 배포 권한을 확인해줘.");
-      setButtonsDisabled(false);
-    });
+      render(); if (showLoading) setStatus("목록 불러오기 완료."); setButtonsDisabled(false);
+    }, () => { setStatus("불러오기 실패: Apps Script URL 또는 배포 권한을 확인해줘."); setButtonsDisabled(false); });
   }
 
   function jsonp(params, onSuccess, onError) {
@@ -249,51 +217,17 @@
     const script = document.createElement("script");
     const query = new URLSearchParams({ ...params, callback: cbName });
     let done = false;
-
-    window[cbName] = function(data) {
-      done = true;
-      cleanup();
-      onSuccess(data);
-    };
-
-    script.onerror = function() {
-      if (!done) {
-        cleanup();
-        onError && onError();
-      }
-    };
-
+    window[cbName] = function(data) { done = true; cleanup(); onSuccess(data); };
+    script.onerror = function() { if (!done) { cleanup(); onError && onError(); } };
     script.src = SCRIPT_URL + (SCRIPT_URL.includes("?") ? "&" : "?") + query.toString();
     document.body.appendChild(script);
-
-    setTimeout(() => {
-      if (!done) {
-        cleanup();
-        onError && onError();
-      }
-    }, 12000);
-
-    function cleanup() {
-      delete window[cbName];
-      script.remove();
-    }
+    setTimeout(() => { if (!done) { cleanup(); onError && onError(); } }, 12000);
+    function cleanup() { delete window[cbName]; script.remove(); }
   }
-
-  function setButtonsDisabled(disabled) {
-    document.querySelectorAll("button").forEach(btn => btn.disabled = disabled);
-  }
-
-  function escapeHtml(value) {
-    return String(value || "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  render();
-  loadEntries();
+  function setButtonsDisabled(disabled) { document.querySelectorAll("button").forEach(btn => btn.disabled = disabled); }
+  function escapeHtml(value) { return String(value || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+  function escapeAttr(value) { return escapeHtml(value).replaceAll("`", "&#096;"); }
+  render(); loadEntries();
 </script>
 </body>
 </html>
