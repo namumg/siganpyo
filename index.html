@@ -41,7 +41,9 @@
   th,td { border:1px solid rgba(170,190,255,.24); padding:5px 6px; vertical-align:middle; }
   th { background:rgba(255,255,255,.09); font-size:14px; }
   .day-cell { width:70px; text-align:center; font-weight:900; font-size:15px; background:rgba(255,255,255,.055); }
-  .time-cell { width:56px; text-align:center; font-weight:900; font-size:14px; }
+  .time-cell { width:92px; text-align:center; font-weight:900; font-size:14px; line-height:1.25; white-space:normal; }
+  .time-main { display:block; }
+  .time-memo { display:block; margin-top:2px; opacity:.78; font-size:12px; font-weight:800; }
   .role-cell { width:132px; text-align:center; padding:4px; }
   .role-options { display:flex; justify-content:center; align-items:center; gap:5px; flex-wrap:nowrap; }
   .role-option { display:inline-flex; align-items:center; gap:2px; padding:3px 4px; border-radius:8px; background:rgba(255,255,255,.055); font-weight:900; font-size:12px; }
@@ -64,7 +66,8 @@
     table { min-width:560px; }
     th,td { padding:4px; }
     .day-cell { width:56px; font-size:14px; }
-    .time-cell { width:48px; font-size:14px; }
+    .time-cell { width:82px; font-size:14px; }
+    .time-memo { font-size:11px; }
     .role-cell { width:128px; }
     .role-options { gap:4px; }
     .role-option { font-size:12px; padding:3px 4px; }
@@ -78,7 +81,7 @@
 <body>
 <div class="wrap">
   <h1>⚔️ 레이드 참여표</h1>
-  <div class="sub">수요일 시작 · 수~일 · 9시 / 10시 · 체크 후 한 번에 적용</div>
+  <div class="sub">이름을 입력하고 참여할 시간을 체크 한 후 선택 적용 버튼을 눌러주세요.</div>
   <section class="panel">
     <div class="top">
       <input id="nameInput" maxlength="12" placeholder="이름 입력 (2~12글자)" />
@@ -92,7 +95,7 @@
       </table>
     </div>
     <div id="status" class="status"></div>
-    <div class="note">※ 같은 요일/시간에 같은 이름이 이미 있으면 등록되지 않음 / 이름 입력칸과 같은 참여자만 취소 버튼이 보입니다.</div>
+    <div class="note">※ 취소하려면 이름을 입력하세요. 이름을 입력하면 취소가 활성화됩니다.<br>※ 모든 레이드는 "클경" 기준입니다.</div>
   </section>
 </div>
 <script>
@@ -100,6 +103,16 @@
   const DAYS = ["수", "목", "금", "토", "일"];
   const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일", "일":"일요일" };
   const TIMES = ["9시", "10시"];
+
+  // 시간 칸에 붙일 설명입니다. 원하는 문구로 바꾸면 됩니다.
+  // 예: "종막", "하드", "노말", "에기르" 등
+  const TIME_MEMO = {
+    "수": { "9시": "종하", "10시": "종노" },
+    "목": { "9시": "4하", "10시": "세하" },
+    "금": { "9시": "지평3", "10시": "지평2" },
+    "토": { "9시": "슈모익", "10시": "X" },
+    "일": { "9시": "X", "10시": "X" }
+  };
   const ROLES = ["dealer", "support", "both"];
   const ROLE_ICON = { dealer:"⚔️", support:"💖", both:"⚔️💖" };
   let entries = [];
@@ -130,7 +143,10 @@
           tr.appendChild(dayTd);
         }
         const timeTd = document.createElement("td");
-        timeTd.className = "time-cell"; timeTd.textContent = time; tr.appendChild(timeTd);
+        const memo = TIME_MEMO[day]?.[time] || "";
+        timeTd.className = "time-cell";
+        timeTd.innerHTML = `<span class="time-main">${escapeHtml(time)}</span>${memo ? `<span class="time-memo">(${escapeHtml(memo)})</span>` : ""}`;
+        tr.appendChild(timeTd);
 
         const roleTd = document.createElement("td");
         roleTd.className = "role-cell";
