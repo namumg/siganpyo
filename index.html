@@ -34,6 +34,10 @@
   button:disabled { opacity:.48; cursor:not-allowed; transform:none; }
   .apply { background:linear-gradient(135deg,#ffc443,#ff6bcb); color:#1d1024; }
   .reload { background:linear-gradient(135deg,#6d5cff,#22b7ff); }
+  .edit-toggle { display:none; background:linear-gradient(135deg,#52e5a8,#2e8cff); }
+  .edit-save { background:linear-gradient(135deg,#ffd65a,#ff7eb3); color:#26162c; }
+  .edit-cancel { background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.2); }
+  .memo-editor { width:100%; min-width:70px; padding:6px 7px; border-radius:8px; text-align:center; font-size:12px; font-weight:800; }
   .cancel-btn { padding:0 4px; border-radius:999px; background:rgba(255,100,120,.18); color:#ff9ca8; border:1px solid rgba(255,130,150,.35); font-size:10px; line-height:1.1; margin-left:1px; }
 
   .table-box { overflow-x:auto; border-radius:14px; border:1px solid rgba(160,185,255,.26); }
@@ -87,6 +91,7 @@
       <input id="nameInput" maxlength="12" placeholder="이름 입력 (2~12글자)" />
       <button class="apply" onclick="applySelections()">선택 적용</button>
       <button class="reload" onclick="loadEntries()">새로고침</button>
+      <button id="editToggleBtn" class="edit-toggle" onclick="toggleEditMode()">시간 글씨 수정</button>
     </div>
     <div class="table-box">
       <table>
@@ -100,19 +105,20 @@
 </div>
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxd33tywNBwO-DLYmF6qVCwmYTjAOVJTVrFwd3Y3jSP9vvdSs_eCh9bCaiPstsien3O/exec";
-  const DAYS = ["수", "목", "금", "토", "일"];
-  const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일", "일":"일요일" };
-  const TIMES = ["9시", "10시"];
+  const DAYS = ["수", "목", "금", "토"];
+  const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일" };
+  const TIMES = ["9시", "10시", "11시"];
 
   // 시간 칸에 붙일 설명입니다. 원하는 문구로 바꾸면 됩니다.
   // 예: "종막", "하드", "노말", "에기르" 등
-  const TIME_MEMO = {
-    "수": { "9시": "종하", "10시": "종노" },
-    "목": { "9시": "세하", "10시": "4하" },
-    "금": { "9시": "지평3", "10시": "지평2" },
-    "토": { "9시": "슈모익", "10시": "X" },
-    "일": { "9시": "X", "10시": "X" }
+  const DEFAULT_TIME_MEMO = {
+    "수": { "9시": "종하", "10시": "종노", "11시": "X" },
+    "목": { "9시": "세하", "10시": "4하", "11시": "X" },
+    "금": { "9시": "지평3", "10시": "지평2", "11시": "X" },
+    "토": { "9시": "슈모익", "10시": "X", "11시": "X" }
   };
+  let TIME_MEMO = JSON.parse(JSON.stringify(DEFAULT_TIME_MEMO));
+  let editMode = false;
   const ROLES = ["dealer", "support", "both"];
   const ROLE_ICON = { dealer:"⚔️", support:"💖", both:"⚔️💖" };
   let entries = [];
@@ -120,7 +126,90 @@
   const tbody = document.getElementById("raidBody");
   const statusEl = document.getElementById("status");
   const nameInput = document.getElementById("nameInput");
+  const editToggleBtn = document.getElementById("editToggleBtn");
   function setStatus(msg) { statusEl.textContent = msg || ""; }
+
+
+  function mergeMemos(serverMemos) {
+    const merged = JSON.parse(JSON.stringify(DEFAULT_TIME_MEMO));
+    if (serverMemos && typeof serverMemos === "object") {
+      DAYS.forEach(day => TIMES.forEach(time => {
+        if (serverMemos[day] && typeof serverMemos[day][time] === "string") {
+          merged[day][time] = serverMemos[day][time];
+        }
+      }));
+    }
+    TIME_MEMO = merged;
+  }
+
+  function loadMemos(showLoading = false) {
+    if (showLoading) setStatus("시간 글씨 불러오는 중...");
+    jsonp({ action:"getMemos" }, (data) => {
+      if (!data.ok) {
+        setStatus("시간 글씨 불러오기 실패: " + (data.error || "알 수 없는 오류"));
+        return;
+      }
+      mergeMemos(data.memos);
+      render();
+      if (showLoading) setStatus("시간 글씨 불러오기 완료.");
+    }, () => setStatus("시간 글씨 불러오기 실패"));
+  }
+
+
+  function updateAdminButton() {
+    const isAdmin = nameInput.value.trim() === "민퀴";
+    editToggleBtn.style.display = isAdmin ? "inline-block" : "none";
+    if (!isAdmin && editMode) {
+      editMode = false;
+      editToggleBtn.textContent = "시간 글씨 수정";
+    }
+  }
+
+  function toggleEditMode() {
+    if (nameInput.value.trim() !== "민퀴") {
+      setStatus("수정 권한이 없어.");
+      return;
+    }
+    if (!editMode) {
+      editMode = true;
+      editToggleBtn.textContent = "수정 저장";
+      editToggleBtn.classList.add("edit-save");
+      setStatus("시간 아래의 글씨를 수정한 뒤 '수정 저장'을 눌러줘.");
+      render();
+      return;
+    }
+
+    const nextMemos = JSON.parse(JSON.stringify(TIME_MEMO));
+    document.querySelectorAll(".memo-editor").forEach(input => {
+      const { day, time } = input.dataset;
+      if (!nextMemos[day]) nextMemos[day] = {};
+      nextMemos[day][time] = input.value.trim();
+    });
+
+    setButtonsDisabled(true);
+    setStatus("시간 글씨를 공용 서버에 저장 중...");
+    jsonp({
+      action:"saveMemos",
+      adminName:nameInput.value.trim(),
+      payload:JSON.stringify(nextMemos)
+    }, (data) => {
+      if (!data.ok) {
+        setStatus("시간 글씨 저장 실패: " + (data.error || "알 수 없는 오류"));
+        setButtonsDisabled(false);
+        return;
+      }
+      mergeMemos(data.memos || nextMemos);
+      editMode = false;
+      editToggleBtn.textContent = "시간 글씨 수정";
+      editToggleBtn.classList.remove("edit-save");
+      setStatus("시간 글씨가 모든 사용자에게 공용 저장됐어.");
+      render();
+      setButtonsDisabled(false);
+    }, () => {
+      setStatus("시간 글씨 저장 실패: Apps Script 배포 상태를 확인해줘.");
+      setButtonsDisabled(false);
+    });
+  }
 
   function validateName() {
     const name = nameInput.value.trim();
@@ -145,7 +234,9 @@
         const timeTd = document.createElement("td");
         const memo = TIME_MEMO[day]?.[time] || "";
         timeTd.className = "time-cell";
-        timeTd.innerHTML = `<span class="time-main">${escapeHtml(time)}</span>${memo ? `<span class="time-memo">(${escapeHtml(memo)})</span>` : ""}`;
+        timeTd.innerHTML = editMode
+          ? `<span class="time-main">${escapeHtml(time)}</span><input class="memo-editor" data-day="${escapeAttr(day)}" data-time="${escapeAttr(time)}" maxlength="20" value="${escapeAttr(memo)}" aria-label="${escapeAttr(DAY_LABELS[day] + ' ' + time + ' 메모')}">`
+          : `<span class="time-main">${escapeHtml(time)}</span>${memo ? `<span class="time-memo">(${escapeHtml(memo)})</span>` : ""}`;
         tr.appendChild(timeTd);
 
         const roleTd = document.createElement("td");
@@ -245,8 +336,9 @@
   function setButtonsDisabled(disabled) { document.querySelectorAll("button").forEach(btn => btn.disabled = disabled); }
   function escapeHtml(value) { return String(value || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
   function escapeAttr(value) { return escapeHtml(value).replaceAll("`", "&#096;"); }
-  nameInput.addEventListener("input", render);
-  render(); loadEntries();
+  nameInput.addEventListener("input", () => { updateAdminButton(); render(); });
+  updateAdminButton();
+  render(); loadMemos(false); loadEntries();
 </script>
 </body>
 </html>
