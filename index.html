@@ -107,16 +107,36 @@
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxd33tywNBwO-DLYmF6qVCwmYTjAOVJTVrFwd3Y3jSP9vvdSs_eCh9bCaiPstsien3O/exec";
   const DAYS = ["수", "목", "금", "토"];
   const DAY_LABELS = { "수":"수요일", "목":"목요일", "금":"금요일", "토":"토요일" };
-  const TIMES = ["9시", "10시", "11시"];
+  const TIMES = ["1차", "2차", "3차", "4차"];
 
   // 시간 칸에 붙일 설명입니다. 원하는 문구로 바꾸면 됩니다.
   // 예: "종막", "하드", "노말", "에기르" 등
   const DEFAULT_TIME_MEMO = {
-    "수": { "9시": "4하", "10시": "종하", "11시": "벨노" },
-    "목": { "9시": "지2", "10시": "지3", "11시": "벨노" },
-    "금": { "9시": "세하", "10시": "세나", "11시": "벨하" },
-    "토": { "9시": "지2", "10시": "세하", "11시": "지3" }
-  };
+  "수": {
+    "1차": "4하",
+    "2차": "종하",
+    "3차": "벨노",
+    "4차": ""
+  },
+  "목": {
+    "1차": "지2",
+    "2차": "지3",
+    "3차": "벨노",
+    "4차": ""
+  },
+  "금": {
+    "1차": "세하",
+    "2차": "세나",
+    "3차": "벨하",
+    "4차": ""
+  },
+  "토": {
+    "1차": "지2",
+    "2차": "세하",
+    "3차": "지3",
+    "4차": "세나"
+  }
+};
   let TIME_MEMO = JSON.parse(JSON.stringify(DEFAULT_TIME_MEMO));
   let editMode = false;
   const ROLES = ["dealer", "support", "both"];
