@@ -255,8 +255,8 @@
         const memo = TIME_MEMO[day]?.[time] || "";
         timeTd.className = "time-cell";
         timeTd.innerHTML = editMode
-          ? `<span class="time-main">${time === "9시" ? "1차" : time === "10시" ? "2차" : "3차"}</span><input class="memo-editor" data-day="${escapeAttr(day)}" data-time="${escapeAttr(time)}" maxlength="20" value="${escapeAttr(memo)}" aria-label="${escapeAttr(DAY_LABELS[day] + ' ' + time + ' 메모')}">`
-          : `<span class="time-main">${time === "9시" ? "1차" : time === "10시" ? "2차" : "3차"}</span>${memo ? `<span class="time-memo">(${escapeHtml(memo)})</span>` : ""}`;
+          ? `<span class="time-main">${time}</span><input class="memo-editor" data-day="${escapeAttr(day)}" data-time="${escapeAttr(time)}" maxlength="20" value="${escapeAttr(memo)}" aria-label="${escapeAttr(DAY_LABELS[day] + ' ' + time + ' 메모')}">`
+          : `<span class="time-main">${time}</span>${memo ? `<span class="time-memo">(${escapeHtml(memo)})</span>` : ""}`;
         tr.appendChild(timeTd);
 
         const roleTd = document.createElement("td");
